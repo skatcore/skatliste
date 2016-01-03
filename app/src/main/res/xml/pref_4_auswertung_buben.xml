@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:title="Mit / ohne 1"
+        android:key="buben1"></Preference>
+    <Preference
+        android:title="Mit / ohne 2"
+        android:key="buben2"></Preference>
+    <Preference
+        android:title="Mit / ohne 3"
+        android:key="buben3"></Preference>
+    <Preference
+        android:title="Mit / ohne 4"
+        android:key="buben4"></Preference>
+</PreferenceScreen>

@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SkatListe</string><?xml version="1.0" encoding="utf-8"?>
+    <string name="app_name">SkatListe</string>
     <string name="btnNeuesSpiel">Neues Spiel</string>
     <string name="btnSpielFortsetzen">Spiel fortsetzen</string>
     <string name="btnSpielLaden">Spiel laden</string>
@@ -32,12 +33,7 @@
     <string name="rbPik">Pik</string>
     <string name="rbRamsch">Ramsch</string>
     <string name="rbVerloren">Verloren</string>
-    <string name="title_activity_add_skatspiel">Spiel eintragen</string>
-    <string name="title_activity_add_skatspiel_null">Nullspiel eintragen</string>
-    <string name="title_activity_inspect_skatrunde">Skatrunde betrachten</string>
-    <string name="title_activity_load_game">Spiel laden</string>
-    <string name="title_activity_main_menu">Hauptmenü</string>
-    <string name="title_activity_neues_spiel">Neues Spiel</string>
+
     <string name="tvAnsagen">Ansagen</string>
     <string name="tvAufspiel">Aufspiel:</string>
     <string name="tvISolist">Solist:</string>
@@ -49,7 +45,6 @@
     <string name="tvSpiel">Spiel</string>
     <string name="tvSpielernamen">Spieler</string>
     <string name="tvSpielerzahl">3 Spieler</string>
-    <string name="title_activity_add_ansage">Ansage machen</string>
     <string name="rbMit">Mit</string>
     <string name="rbOhne">Ohne</string>
     <string name="rbBuben1">1</string>
@@ -58,6 +53,9 @@
     <string name="rbBuben4">4</string>
 
     <string name="action_settings">Settings</string>
+    <!--
+
+    <string name="title_activity_add_ansage">Ansage machen</string>
 
     <string name="title_activity_x1_spiel">Spiel</string>
     <string name="title_activity_x2_solist">Solist</string>
@@ -67,13 +65,90 @@
     <string name="title_activity_x6_auswertung_schneider">Auswertung: Schneider</string>
     <string name="title_activity_auswertung">Auswertung: Übersicht</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_x7_auswertung">Auswertung</string>
-    <string name="menu_ok">OK</string>
-
-
     <string name="title_activity_x71_ramsch_ausgang">Ausgang</string>
     <string name="title_activity_x72_ramsch_verlierer_gewinner">Titel</string>
     <string name="title_activity_x73_ramsch_multiplikator">Multiplikator</string>
     <string name="title_activity_x74_ramsch_auswertung">Auswertung Ramsch</string>
+
+    <string name="title_activity_add_skatspiel">Spiel eintragen</string>
+    <string name="title_activity_add_skatspiel_null">Nullspiel eintragen</string>
+    <string name="title_activity_inspect_skatrunde">Skatrunde betrachten</string>
+    <string name="title_activity_load_game">Spiel laden</string>
+    <string name="title_activity_neues_spiel">Neues Spiel</string>
+    -->
+
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_ok">OK</string>
+    <string name="title_activity_skat_list">SkatList</string>
+    <string name="title_activity_load_game">Spiel laden</string>
+    <string name="title_activity_x1_spiel">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="title_activity_x2_solist">Settings</string>
+    <string name="title_activity_x3_ansagen">Settings</string>
+    <string name="title_activity_x4_auswertung_buben">Settings</string>
+    <string name="title_activity_x5_auswertung_ausgang">Settings</string>
+    <string name="title_activity_x6_auswertung_schneider">Settings</string>
+    <string name="title_activity_x7_auswertung">X7Auswertung</string>
+    <string name="title_activity_x71_ramsch_ausgang">Settings</string>
+    <string name="title_activity_x72_ramsch_verlierer_gewinner">Settings</string>
+    <string name="title_activity_x73_ramsch_multiplikator">Settings</string>
+    <string name="title_activity_x74_ramsch_auswertung">X74RamschAuswertung</string>
 </resources>

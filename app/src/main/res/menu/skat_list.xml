@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="wat.skat.skatliste.SkatList">
+
+    <item
+        android:id="@+id/menuAdd"
+        android:orderInCategory="100"
+        android:title="@string/menuAddSkatspiel"
+        app:showAsAction="always"/>
+
+    <!--
+    <item
+        android:id="@+id/menuDeleteLastRound"
+        android:orderInCategory="100"
+        android:title="@string/menuDeleteLastRound"
+        android:showAsAction="never"/>
+        -->
+
+    <item
+        android:id="@+id/menuExport"
+        android:orderInCategory="100"
+        android:title="@string/menuExport"
+        app:showAsAction="never"/>
+</menu>

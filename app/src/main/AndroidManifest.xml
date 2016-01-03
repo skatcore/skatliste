@@ -18,6 +18,114 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LoadGame"
+            android:label="@string/title_activity_load_game"
+            android:parentActivityName=".MainMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.MainMenu" />
+        </activity>
+        <activity
+            android:name=".SkatList"
+            android:label="@string/title_activity_skat_list"
+            android:parentActivityName=".MainMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.MainMenu" />
+        </activity>
+        <activity
+            android:name=".X1Spiel"
+            android:label="@string/title_activity_x1_spiel"
+            android:parentActivityName=".SkatList">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.SkatList" />
+        </activity>
+        <activity
+            android:name=".X2Solist"
+            android:label="@string/title_activity_x2_solist"
+            android:parentActivityName=".X1Spiel">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.X1Spiel" />
+        </activity>
+        <activity
+            android:name=".X3Ansagen"
+            android:label="@string/title_activity_x3_ansagen"
+            android:parentActivityName=".X2Solist">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.X2Solist" />
+        </activity>
+        <activity
+            android:name=".X4AuswertungBuben"
+            android:label="@string/title_activity_x4_auswertung_buben"
+            android:parentActivityName=".X3Ansagen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.X3Ansagen" />
+        </activity>
+        <activity
+            android:name=".X5AuswertungAusgang"
+            android:label="@string/title_activity_x5_auswertung_ausgang"
+            android:parentActivityName=".X4AuswertungBuben">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.X4AuswertungBuben" />
+        </activity>
+        <activity
+            android:name=".X6AuswertungSchneider"
+            android:label="@string/title_activity_x6_auswertung_schneider"
+            android:parentActivityName=".X5AuswertungAusgang">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.X5AuswertungAusgang" />
+        </activity>
+        <activity
+            android:name=".X7Auswertung"
+            android:label="@string/title_activity_x7_auswertung"
+            android:parentActivityName=".X6AuswertungSchneider"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.X6AuswertungSchneider" />
+        </activity>
+        <activity
+            android:name=".X71RamschAusgang"
+            android:label="@string/title_activity_x71_ramsch_ausgang"
+            android:parentActivityName=".X1Spiel">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.X1Spiel" />
+        </activity>
+        <activity
+            android:name=".X72RamschVerliererGewinner"
+            android:label="@string/title_activity_x72_ramsch_verlierer_gewinner"
+            android:parentActivityName=".X71RamschAusgang">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.X71RamschAusgang" />
+        </activity>
+        <activity
+            android:name=".X73RamschMultiplikator"
+            android:label="@string/title_activity_x73_ramsch_multiplikator"
+            android:parentActivityName=".X72RamschVerliererGewinner">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.X72RamschVerliererGewinner" />
+        </activity>
+        <activity
+            android:name=".X74RamschAuswertung"
+            android:label="@string/title_activity_x74_ramsch_auswertung"
+            android:parentActivityName=".X73RamschMultiplikator"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.X73RamschMultiplikator" />
+        </activity>
     </application>
 
 </manifest>

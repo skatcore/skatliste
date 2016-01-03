@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:title="Normal"
+        android:key="normal"></Preference>
+    <Preference
+        android:title="Schneider"
+        android:key="schneider"></Preference>
+    <Preference
+        android:title="Schwarz"
+        android:key="schwarz"></Preference>
+
+</PreferenceScreen>
