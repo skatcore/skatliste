@@ -126,6 +126,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="wat.skat.skatliste.X73RamschMultiplikator" />
         </activity>
+        <activity
+            android:name=".NeuesSpiel"
+            android:label="@string/title_activity_neues_spiel"
+            android:parentActivityName=".MainMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="wat.skat.skatliste.MainMenu" />
+        </activity>
     </application>
 
 </manifest>

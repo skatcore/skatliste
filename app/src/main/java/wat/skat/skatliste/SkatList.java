@@ -32,7 +32,7 @@ public class SkatList extends AppCompatActivity {
     public static final int INTENT_FLAG_RUNDE_EINGETRAGEN   = 2;
     public static final int INTENT_FLAG_SPIEL_FORTSETZEN    = 3;
 
-    private DBController dbCon;
+    private DBController dbCon = new DBController(this);;
     private ListView listView;
 
     private static int bockCount;
@@ -43,189 +43,11 @@ public class SkatList extends AppCompatActivity {
         setContentView(R.layout.activity_skat_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setTitle("Skatliste");
 
-        dbCon = new DBController(this);
-        dbCon.open();
 
-        Intent intent = getIntent();
-        int intentFlag = intent.getIntExtra("intentFlag", INTENT_FLAG_DEFAULT);
-        switch (intentFlag) {
-            case INTENT_FLAG_NEUES_SPIEL:
-                datum = intent.getStringExtra("datum");
-                spieler1 = intent.getStringExtra("spieler1");
-                spieler2 = intent.getStringExtra("spieler2");
-                spieler3 = intent.getStringExtra("spieler3");
-                spieler4 = intent.getStringExtra("spieler4");
-                spieler5 = intent.getStringExtra("spieler5");
-                spielerzahl = intent.getIntExtra("spielerzahl", -1);
-                geber = 1;
-                bockCount = 0;
-
-                DBSpielController dbSpielCon = new DBSpielController(this);
-                dbSpielCon.open();
-                dbSpielCon.insert(datum, new String[]{spieler1, spieler2, spieler3, spieler4, spieler5});
-                dbSpielCon.close();
-                setLastPlayedRound(datum);
-                break;
-            case INTENT_FLAG_RUNDE_EINGETRAGEN:
-                //oldBockCount = bockCount; // Backup for last round deletion
-
-                //boolean bockUndRamsch = intent.getBooleanExtra("bockUndRamsch", false);
-                //boolean warRamsch = intent.getBooleanExtra("warRamsch", false);
-                /*
-                switch (bockRamschStatus) {
-                    case 0:
-                        if (bockUndRamsch) {
-                            bockCount += spielerzahl;
-                            ramschCount += spielerzahl;
-                            bockRamschStatus = 1;
-                        }
-                        break;
-                    case 1:
-                        bockCount -= 1;
-                        if (bockCount % spielerzahl == 0) {
-                            bockRamschStatus = 2;
-                        }
-                        break;
-                    case 2:
-                        if (warRamsch) {
-                            // Bei Grand Hand nicht reduzieren
-                            ramschCount -= 1;
-                            if (ramschCount % spielerzahl == 0) {
-                                bockRamschStatus = 0;
-                            }
-                        }
-                        geber -= 1; // Grand Hand anstelle von Ramsch
-                        break;
-                }*/
-
-                if (bockCount > 0) {
-                    bockCount -= 1;
-                }
-
-                geber = (geber % spielerzahl) + 1;
-                break;
-            case INTENT_FLAG_SPIEL_FORTSETZEN:
-                datum = intent.getStringExtra("datum");
-                try {
-                    Cursor cursor = dbCon.fetchForDate(datum);
-                    cursor.moveToLast();
-                    spielerzahl = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_SPIELERZAHL));
-                    spieler1 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER1));
-                    spieler2 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER2));
-                    spieler3 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER3));
-                    spieler4 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER4));
-                    if (spieler4 == null) spieler4 = "";
-                    spieler5 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER5));
-                    if (spieler5 == null) spieler5 = "";
-                    geber = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_GEBER));
-                    geber = (geber % spielerzahl) + 1;
-                    bockCount = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_BOCK_COUNT));
-                    if (bockCount > 0) {
-                        bockCount -= 1;
-                    }
-                    setLastPlayedRound(datum);
-                } catch (Exception e) {
-                    String spielerstring = intent.getStringExtra("spieler");
-                    if (spielerstring == null) {
-                        Toast.makeText(getApplicationContext(), "Keine Daten vorhanden. Neues Spiel erstellen oder laden.", Toast.LENGTH_SHORT).show();
-                        Intent intentMain = new Intent(getApplicationContext(), MainMenu.class);
-                        startActivity(intentMain);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Keine Runde eingetragen, erstelle neues Spiel.", Toast.LENGTH_SHORT).show();
-                        String[] spieler = spielerstring.split(", ");
-                        spielerzahl = spieler.length;
-                        spieler1 = spieler[0];
-                        spieler2 = spieler[1];
-                        spieler3 = spieler[2];
-                        if (spielerzahl >= 4) {
-                            spieler4 = spieler[3];
-                        } else {
-                            spieler4 = "";
-                        }
-                        if (spielerzahl >= 5) {
-                            spieler5 = spieler[4];
-                        } else {
-                            spieler5 = "";
-                        }
-                        geber = 1;
-                        bockCount = 0;
-                        setLastPlayedRound(datum);
-                    }
-                }
-                break;
-            case INTENT_FLAG_DEFAULT:
-                // Keine neue Runde, daher Geber nicht aendern.
-                break;
-        }
-
-        // Header: Player names + "Spiel"
-        LinearLayout llPlayernames = (LinearLayout) findViewById(R.id.llPlayernames);
-        llPlayernames.setWeightSum(spielerzahl + 1);
-        TextView tvPlayer1 = (TextView) findViewById(R.id.tvPlayer1);
-        tvPlayer1.setText(spieler1);
-        TextView tvPlayer2 = (TextView) findViewById(R.id.tvPlayer2);
-        tvPlayer2.setText(spieler2);
-        TextView tvPlayer3 = (TextView) findViewById(R.id.tvPlayer3);
-        tvPlayer3.setText(spieler3);
-        TextView tvPlayer4 = (TextView) findViewById(R.id.tvPlayer4);
-        tvPlayer4.setText(spieler4);
-        tvPlayer4.setVisibility((spielerzahl >= 4) ? View.VISIBLE : View.GONE);
-        TextView tvPlayer5 = (TextView) findViewById(R.id.tvPlayer5);
-        tvPlayer5.setText(spieler5);
-        tvPlayer5.setVisibility((spielerzahl >= 5) ? View.VISIBLE : View.GONE);
-
-        listView = (ListView) findViewById(R.id.listView);
-        listView.setEmptyView(findViewById(R.id.textViewEmpty));
-
-        updateListViewAndAdapter();
-
-        updateBockCount();
-
-        Button btRemoveBock = (Button) findViewById(R.id.btRemoveBock);
-        btRemoveBock.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                removeAllBoecke();
-                return false;
-            }
-        });
-
-        // TODO
-        /*
-        // OnCLickListener For List Items
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
-                String id       = getString(view.findViewById(R.id.tvId));
-                Intent intent = new Intent(getApplicationContext(), InspectSkatrundeActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-            }
-
-            private String getString(View v) {
-                TextView tv = (TextView) v;
-                CharSequence charSeq = tv.getText();
-                if (charSeq != null) {
-                    return charSeq.toString();
-                } else {
-                    return "";
-                }
-            }
-        });
-        */
     }
 
     private void updateBockCount() {
@@ -396,5 +218,188 @@ public class SkatList extends AppCompatActivity {
     public void removeAllBoecke() {
         bockCount = 0;
         updateBockCount();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dbCon.open();
+        readDbToGUI();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dbCon.close();
+    }
+
+    private void readDbToGUI() {
+        Intent intent = getIntent();
+        int intentFlag = intent.getIntExtra("intentFlag", INTENT_FLAG_DEFAULT);
+        switch (intentFlag) {
+            case INTENT_FLAG_NEUES_SPIEL:
+                datum = intent.getStringExtra("datum");
+                spieler1 = intent.getStringExtra("spieler1");
+                spieler2 = intent.getStringExtra("spieler2");
+                spieler3 = intent.getStringExtra("spieler3");
+                spieler4 = intent.getStringExtra("spieler4");
+                spieler5 = intent.getStringExtra("spieler5");
+                spielerzahl = intent.getIntExtra("spielerzahl", -1);
+                geber = 1;
+                bockCount = 0;
+
+                DBSpielController dbSpielCon = new DBSpielController(this);
+                dbSpielCon.open();
+                dbSpielCon.insert(datum, new String[]{spieler1, spieler2, spieler3, spieler4, spieler5});
+                dbSpielCon.close();
+                setLastPlayedRound(datum);
+                break;
+            case INTENT_FLAG_RUNDE_EINGETRAGEN:
+                //oldBockCount = bockCount; // Backup for last round deletion
+
+                //boolean bockUndRamsch = intent.getBooleanExtra("bockUndRamsch", false);
+                //boolean warRamsch = intent.getBooleanExtra("warRamsch", false);
+                /*
+                switch (bockRamschStatus) {
+                    case 0:
+                        if (bockUndRamsch) {
+                            bockCount += spielerzahl;
+                            ramschCount += spielerzahl;
+                            bockRamschStatus = 1;
+                        }
+                        break;
+                    case 1:
+                        bockCount -= 1;
+                        if (bockCount % spielerzahl == 0) {
+                            bockRamschStatus = 2;
+                        }
+                        break;
+                    case 2:
+                        if (warRamsch) {
+                            // Bei Grand Hand nicht reduzieren
+                            ramschCount -= 1;
+                            if (ramschCount % spielerzahl == 0) {
+                                bockRamschStatus = 0;
+                            }
+                        }
+                        geber -= 1; // Grand Hand anstelle von Ramsch
+                        break;
+                }*/
+
+                if (bockCount > 0) {
+                    bockCount -= 1;
+                }
+
+                geber = (geber % spielerzahl) + 1;
+                break;
+            case INTENT_FLAG_SPIEL_FORTSETZEN:
+                datum = intent.getStringExtra("datum");
+                try {
+                    Cursor cursor = dbCon.fetchForDate(datum);
+                    cursor.moveToLast();
+                    spielerzahl = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_SPIELERZAHL));
+                    spieler1 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER1));
+                    spieler2 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER2));
+                    spieler3 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER3));
+                    spieler4 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER4));
+                    if (spieler4 == null) spieler4 = "";
+                    spieler5 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER5));
+                    if (spieler5 == null) spieler5 = "";
+                    geber = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_GEBER));
+                    geber = (geber % spielerzahl) + 1;
+                    bockCount = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_BOCK_COUNT));
+                    if (bockCount > 0) {
+                        bockCount -= 1;
+                    }
+                    setLastPlayedRound(datum);
+                } catch (Exception e) {
+                    String spielerstring = intent.getStringExtra("spieler");
+                    if (spielerstring == null) {
+                        Toast.makeText(getApplicationContext(), "Keine Daten vorhanden. Neues Spiel erstellen oder laden.", Toast.LENGTH_SHORT).show();
+                        Intent intentMain = new Intent(getApplicationContext(), MainMenu.class);
+                        startActivity(intentMain);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Keine Runde eingetragen, erstelle neues Spiel.", Toast.LENGTH_SHORT).show();
+                        String[] spieler = spielerstring.split(", ");
+                        spielerzahl = spieler.length;
+                        spieler1 = spieler[0];
+                        spieler2 = spieler[1];
+                        spieler3 = spieler[2];
+                        if (spielerzahl >= 4) {
+                            spieler4 = spieler[3];
+                        } else {
+                            spieler4 = "";
+                        }
+                        if (spielerzahl >= 5) {
+                            spieler5 = spieler[4];
+                        } else {
+                            spieler5 = "";
+                        }
+                        geber = 1;
+                        bockCount = 0;
+                        setLastPlayedRound(datum);
+                    }
+                }
+                break;
+            case INTENT_FLAG_DEFAULT:
+                // Keine neue Runde, daher Geber nicht aendern.
+                break;
+        }
+
+        // Header: Player names + "Spiel"
+        LinearLayout llPlayernames = (LinearLayout) findViewById(R.id.llPlayernames);
+        llPlayernames.setWeightSum(spielerzahl + 1);
+        TextView tvPlayer1 = (TextView) findViewById(R.id.tvPlayer1);
+        tvPlayer1.setText(spieler1);
+        TextView tvPlayer2 = (TextView) findViewById(R.id.tvPlayer2);
+        tvPlayer2.setText(spieler2);
+        TextView tvPlayer3 = (TextView) findViewById(R.id.tvPlayer3);
+        tvPlayer3.setText(spieler3);
+        TextView tvPlayer4 = (TextView) findViewById(R.id.tvPlayer4);
+        tvPlayer4.setText(spieler4);
+        tvPlayer4.setVisibility((spielerzahl >= 4) ? View.VISIBLE : View.GONE);
+        TextView tvPlayer5 = (TextView) findViewById(R.id.tvPlayer5);
+        tvPlayer5.setText(spieler5);
+        tvPlayer5.setVisibility((spielerzahl >= 5) ? View.VISIBLE : View.GONE);
+
+        listView = (ListView) findViewById(R.id.listView);
+        listView.setEmptyView(findViewById(R.id.textViewEmpty));
+
+        updateListViewAndAdapter();
+
+        updateBockCount();
+
+        Button btRemoveBock = (Button) findViewById(R.id.btRemoveBock);
+        btRemoveBock.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                removeAllBoecke();
+                return false;
+            }
+        });
+
+        // TODO
+        /*
+        // OnCLickListener For List Items
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
+                String id       = getString(view.findViewById(R.id.tvId));
+                Intent intent = new Intent(getApplicationContext(), InspectSkatrundeActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+
+            private String getString(View v) {
+                TextView tv = (TextView) v;
+                CharSequence charSeq = tv.getText();
+                if (charSeq != null) {
+                    return charSeq.toString();
+                } else {
+                    return "";
+                }
+            }
+        });
+        */
     }
 }

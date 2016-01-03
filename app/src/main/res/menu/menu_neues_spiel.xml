@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="wat.skat.skatliste.X7Auswertung">
-
-    <item android:id="@+id/action_OK"
-        android:title="@string/menu_ok"
+    tools:context=".NeuesSpiel">
+    <item
+        android:id="@+id/menuSpielStarten"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
+        android:title="@string/menuSpielStart"
+        app:showAsAction="always"/>
 </menu>

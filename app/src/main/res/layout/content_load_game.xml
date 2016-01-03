@@ -12,4 +12,40 @@
     tools:context="wat.skat.skatliste.LoadGame"
     tools:showIn="@layout/activity_load_game">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/col_datum"
+            android:id="@+id/textView2"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/col_spieler"
+            android:id="@+id/textView3"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listViewGames"
+        android:dividerHeight="1sp"
+        android:padding="10sp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_list_text"
+        android:id="@+id/textViewEmpty"
+        android:layout_below="@+id/listViewGames"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

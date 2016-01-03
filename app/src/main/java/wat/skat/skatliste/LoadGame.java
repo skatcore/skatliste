@@ -28,15 +28,6 @@ public class LoadGame extends AppCompatActivity {
         setContentView(R.layout.activity_load_game);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dbSpielCon = new DBSpielController(this);
@@ -47,16 +38,16 @@ public class LoadGame extends AppCompatActivity {
 
         Cursor cursor = dbSpielCon.fetch();
         String[] from = new String[]{
-                Entry._ID,
-                Entry.COL_DATUM,
-                Entry.COL_SPIELER};
+                DBSpielContract.Entry._ID,
+                DBSpielContract.Entry.COL_DATUM,
+                DBSpielContract.Entry.COL_SPIELER};
 
         int[] into = new int[]{
                 R.id.tvId,
                 R.id.tvSpielDatum,
                 R.id.tvSpieler};
 
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(LoadGameActivity.this, R.layout.activity_view_game_record, cursor, from, into, 0);
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(LoadGame.this, R.layout.activity_view_game_record, cursor, from, into, 0);
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
 
@@ -66,8 +57,8 @@ public class LoadGame extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
                 String datum       = getString(view.findViewById(R.id.tvSpielDatum));
                 String spieler     = getString(view.findViewById(R.id.tvSpieler));
-                Intent intent = new Intent(getApplicationContext(), SkatListActivity.class);
-                intent.putExtra("intentFlag", SkatListActivity.INTENT_FLAG_SPIEL_FORTSETZEN);
+                Intent intent = new Intent(getApplicationContext(), SkatList.class);
+                intent.putExtra("intentFlag", SkatList.INTENT_FLAG_SPIEL_FORTSETZEN);
                 intent.putExtra("datum", datum);
                 intent.putExtra("spieler", spieler);
 
